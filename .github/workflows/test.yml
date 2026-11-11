@@ -44,7 +44,7 @@ jobs:
       - uses: pnpm/action-setup@v6
         with:
           version: 12.11.2
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.3.3
       - name: Install the ASR validator
         run: pnpm --dir asr/tools/validator install --frozen-lockfile
       - name: Build entire-asr
