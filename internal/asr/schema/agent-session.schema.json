@@ -1,0 +1,1647 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentsessionrecord.org/schema/v0/agent-session.schema.json",
+  "title": "Agent Session Record 0.1 record",
+  "allOf": [
+    {
+      "$ref": "#/$defs/Envelope"
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "session"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/record.session"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "session_info"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/record.session_info"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "message"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/record.message"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "tool_call"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/record.tool_call"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "tool_result"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/record.tool_result"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "approval"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/record.approval"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "file_change"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/record.file_change"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "vcs"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/record.vcs"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "inference"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/record.inference"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "gap"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/record.gap"
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "pattern": "/"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+/[^/\\s]+(?![\\s\\S])"
+          }
+        },
+        "x-asr": "ASR-017"
+      }
+    }
+  ],
+  "$defs": {
+    "RecordId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[^\\x00-\\x1F\\x7F-\\x9F]+(?![\\s\\S])",
+      "x-asr": "ASR-007"
+    },
+    "AgentName": {
+      "type": "string",
+      "pattern": "^(?:amp|antigravity|astrbot|auggie|claude-code|cline|codebuddy|codex|continue|copilot-cli|crush|cursor|deepagents|deepseek-harness|devin|droid|firebender|forgecode|fx|gemini-cli|goose|grok-build|hermes|junie|kilo|kimi-code|kiro|lingma|mimocode|mistral-vibe|mux|nanoclaw|openclaw|opencode|openhands|pi|qoder|qwen-code|roo-code|rovodev|shelley|t3-code|tabnine|warp|xum|zed|[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+)(?![\\s\\S])",
+      "x-asr": "ASR-010"
+    },
+    "SessionRef": {
+      "type": "string",
+      "pattern": "^(?:amp|antigravity|astrbot|auggie|claude-code|cline|codebuddy|codex|continue|copilot-cli|crush|cursor|deepagents|deepseek-harness|devin|droid|firebender|forgecode|fx|gemini-cli|goose|grok-build|hermes|junie|kilo|kimi-code|kiro|lingma|mimocode|mistral-vibe|mux|nanoclaw|openclaw|opencode|openhands|pi|qoder|qwen-code|roo-code|rovodev|shelley|t3-code|tabnine|warp|xum|zed|[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+):(?:(?:%[0-7][0-9A-F]|%(?:C[2-9A-F]|D[0-9A-F])(?:%[89AB][0-9A-F])|%E0%[AB][0-9A-F](?:%[89AB][0-9A-F])|%E[1-CEF](?:%[89AB][0-9A-F]){2}|%ED%[89][0-9A-F](?:%[89AB][0-9A-F])|%F0%[9AB][0-9A-F](?:%[89AB][0-9A-F]){2}|%F[1-3](?:%[89AB][0-9A-F]){3}|%F4%8[0-9A-F](?:%[89AB][0-9A-F]){2})|[^%:#\\x00-\\x20\\x7F-\\x9F])+(?::(?:(?:%[0-7][0-9A-F]|%(?:C[2-9A-F]|D[0-9A-F])(?:%[89AB][0-9A-F])|%E0%[AB][0-9A-F](?:%[89AB][0-9A-F])|%E[1-CEF](?:%[89AB][0-9A-F]){2}|%ED%[89][0-9A-F](?:%[89AB][0-9A-F])|%F0%[9AB][0-9A-F](?:%[89AB][0-9A-F]){2}|%F[1-3](?:%[89AB][0-9A-F]){3}|%F4%8[0-9A-F](?:%[89AB][0-9A-F]){2})|[^%:#\\x00-\\x20\\x7F-\\x9F])+)?(?:#(?:(?!%(?:[01][0-9A-F]|7F)|%C2%[89][0-9A-F])(?:%[0-7][0-9A-F]|%(?:C[2-9A-F]|D[0-9A-F])(?:%[89AB][0-9A-F])|%E0%[AB][0-9A-F](?:%[89AB][0-9A-F])|%E[1-CEF](?:%[89AB][0-9A-F]){2}|%ED%[89][0-9A-F](?:%[89AB][0-9A-F])|%F0%[9AB][0-9A-F](?:%[89AB][0-9A-F]){2}|%F[1-3](?:%[89AB][0-9A-F]){3}|%F4%8[0-9A-F](?:%[89AB][0-9A-F]){2})|[^%:#\\x00-\\x20\\x7F-\\x9F]){1,256})?(?![\\s\\S])",
+      "x-asr": "ASR-011"
+    },
+    "SessionOnlyRef": {
+      "type": "string",
+      "pattern": "^(?:amp|antigravity|astrbot|auggie|claude-code|cline|codebuddy|codex|continue|copilot-cli|crush|cursor|deepagents|deepseek-harness|devin|droid|firebender|forgecode|fx|gemini-cli|goose|grok-build|hermes|junie|kilo|kimi-code|kiro|lingma|mimocode|mistral-vibe|mux|nanoclaw|openclaw|opencode|openhands|pi|qoder|qwen-code|roo-code|rovodev|shelley|t3-code|tabnine|warp|xum|zed|[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+):(?:(?:%[0-7][0-9A-F]|%(?:C[2-9A-F]|D[0-9A-F])(?:%[89AB][0-9A-F])|%E0%[AB][0-9A-F](?:%[89AB][0-9A-F])|%E[1-CEF](?:%[89AB][0-9A-F]){2}|%ED%[89][0-9A-F](?:%[89AB][0-9A-F])|%F0%[9AB][0-9A-F](?:%[89AB][0-9A-F]){2}|%F[1-3](?:%[89AB][0-9A-F]){3}|%F4%8[0-9A-F](?:%[89AB][0-9A-F]){2})|[^%:#\\x00-\\x20\\x7F-\\x9F])+(?::(?:(?:%[0-7][0-9A-F]|%(?:C[2-9A-F]|D[0-9A-F])(?:%[89AB][0-9A-F])|%E0%[AB][0-9A-F](?:%[89AB][0-9A-F])|%E[1-CEF](?:%[89AB][0-9A-F]){2}|%ED%[89][0-9A-F](?:%[89AB][0-9A-F])|%F0%[9AB][0-9A-F](?:%[89AB][0-9A-F]){2}|%F[1-3](?:%[89AB][0-9A-F]){3}|%F4%8[0-9A-F](?:%[89AB][0-9A-F]){2})|[^%:#\\x00-\\x20\\x7F-\\x9F])+)?(?![\\s\\S])",
+      "x-asr": "ASR-011"
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt]",
+      "x-asr": "ASR-006"
+    },
+    "AbsolutePath": {
+      "type": "string",
+      "pattern": "^(?:/|[A-Za-z]:[/\\\\]|\\\\\\\\[^\\\\]+\\\\[^\\\\]+)",
+      "x-asr": "ASR-012"
+    },
+    "Path": {
+      "type": "string",
+      "pattern": "^(?:/[\\s\\S]*|[A-Za-z]:[/\\\\][\\s\\S]*|\\\\\\\\[^\\\\]+\\\\[^\\\\]+[\\s\\S]*|[^\\\\]*)(?![\\s\\S])",
+      "x-asr": "ASR-012"
+    },
+    "Meta": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+(?![\\s\\S])"
+      },
+      "x-asr": "ASR-017"
+    },
+    "Commit": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})(?![\\s\\S])",
+      "x-asr": "ASR-031"
+    },
+    "CopiedFrom": {
+      "type": "object",
+      "properties": {
+        "session": {
+          "$ref": "#/$defs/SessionOnlyRef"
+        },
+        "record": {
+          "$ref": "#/$defs/RecordId"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "session"
+          ]
+        },
+        {
+          "required": [
+            "record"
+          ]
+        }
+      ],
+      "x-asr": "ASR-040"
+    },
+    "Parent": {
+      "type": "object",
+      "properties": {
+        "session": {
+          "$ref": "#/$defs/SessionOnlyRef"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "callId": {
+          "type": "string"
+        },
+        "record": {
+          "$ref": "#/$defs/RecordId"
+        },
+        "role": {
+          "type": "string"
+        },
+        "copiedThrough": {
+          "$ref": "#/$defs/RecordId"
+        }
+      },
+      "required": [
+        "session",
+        "kind"
+      ],
+      "x-asr": "ASR-040"
+    },
+    "Repos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "$ref": "#/$defs/Path"
+          },
+          "remote": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "string"
+          },
+          "head": {
+            "$ref": "#/$defs/Commit"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "x-asr": "ASR-019"
+      }
+    },
+    "Identity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "email": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "id"
+          ]
+        },
+        {
+          "required": [
+            "email"
+          ]
+        },
+        {
+          "required": [
+            "name"
+          ]
+        }
+      ],
+      "x-asr": "ASR-019"
+    },
+    "DerivedFrom": {
+      "type": "object",
+      "properties": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+        }
+      },
+      "required": [
+        "sha256"
+      ],
+      "x-asr": "ASR-060"
+    },
+    "ExternalSandbox": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "native": {}
+      },
+      "x-asr": "ASR-072"
+    },
+    "AgentSettings": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "approval": {},
+        "sandbox": {},
+        "asks": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "x-asr": "ASR-072"
+        },
+        "externalSandbox": {
+          "$ref": "#/$defs/ExternalSandbox"
+        },
+        "modelSettings": {
+          "$ref": "#/$defs/ConfiguredModelSettings"
+        }
+      },
+      "x-asr": "ASR-020"
+    },
+    "Model": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "requested": {
+          "type": "string"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "id"
+          ]
+        },
+        {
+          "required": [
+            "requested"
+          ]
+        }
+      ],
+      "x-asr": "ASR-035"
+    },
+    "ModelSettings": {
+      "type": "object",
+      "properties": {
+        "reasoningEffort": {
+          "type": "string"
+        },
+        "maxOutputTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "temperature": {
+          "type": "number"
+        },
+        "serviceTier": {
+          "type": "string"
+        }
+      },
+      "x-asr": "ASR-035"
+    },
+    "ConfiguredModelSettings": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "reasoningEffort": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "maxOutputTokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "temperature": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "serviceTier": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "x-asr": "ASR-020"
+    },
+    "Tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "inputSchema": {},
+          "source": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "x-asr": "ASR-074"
+    },
+    "Usage": {
+      "type": "object",
+      "properties": {
+        "inputTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cacheReadTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cacheWriteTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "outputTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reasoningTokens": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "x-asr": "ASR-036"
+    },
+    "SessionUsage": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/Usage"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "includesSubagents": {
+              "type": "boolean"
+            }
+          }
+        }
+      ],
+      "x-asr": "ASR-020"
+    },
+    "Cost": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}(?![\\s\\S])"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "x-asr": "ASR-037"
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "code": {}
+      }
+    },
+    "FileState": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "objectId": {
+          "type": "string"
+        },
+        "objectIdType": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "objectIdType": {
+                "const": "git-blob-sha1"
+              }
+            }
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "objectId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}(?![\\s\\S])"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "objectIdType": {
+                "enum": [
+                  "git-blob-sha256",
+                  "sha256"
+                ]
+              }
+            },
+            "required": [
+              "objectIdType"
+            ]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "objectId": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
+              }
+            }
+          }
+        }
+      ],
+      "x-asr": "ASR-030"
+    },
+    "PullRequest": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "state": {
+          "type": "string"
+        },
+        "headCommit": {
+          "$ref": "#/$defs/Commit"
+        },
+        "mergeCommit": {
+          "$ref": "#/$defs/Commit"
+        },
+        "commits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Commit"
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "url"
+          ]
+        },
+        {
+          "required": [
+            "repository",
+            "number"
+          ]
+        }
+      ],
+      "x-asr": "ASR-031"
+    },
+    "Vcs": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "string"
+        },
+        "callId": {
+          "type": "string"
+        },
+        "actor": {
+          "type": "string"
+        },
+        "repo": {
+          "$ref": "#/$defs/AbsolutePath"
+        },
+        "commit": {
+          "$ref": "#/$defs/Commit"
+        },
+        "commitPrefix": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{7,39}(?![\\s\\S])"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "parents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Commit"
+          }
+        },
+        "parentCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "headBefore": {
+          "$ref": "#/$defs/Commit"
+        },
+        "headAfter": {
+          "$ref": "#/$defs/Commit"
+        },
+        "rewrites": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "$ref": "#/$defs/Commit"
+              },
+              "to": {
+                "$ref": "#/$defs/Commit"
+              }
+            },
+            "required": [
+              "from",
+              "to"
+            ]
+          }
+        },
+        "branch": {
+          "type": "string"
+        },
+        "remote": {
+          "type": "string"
+        },
+        "pr": {
+          "$ref": "#/$defs/PullRequest"
+        }
+      },
+      "required": [
+        "action",
+        "status",
+        "evidence"
+      ],
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "commit",
+              "commitPrefix"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "callId",
+              "actor"
+            ]
+          }
+        }
+      ],
+      "x-asr": "ASR-031"
+    },
+    "ContentPart": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "origin": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "type": "string",
+                "pattern": "/"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+/[^/\\s]+(?![\\s\\S])"
+              }
+            },
+            "x-asr": "ASR-017"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "text"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "image"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "mimeType": {
+                "type": "string"
+              },
+              "data": {
+                "type": "string",
+                "contentEncoding": "base64",
+                "format": "asr-base64"
+              }
+            },
+            "required": [
+              "mimeType"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "audio"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "mimeType": {
+                "type": "string"
+              },
+              "data": {
+                "type": "string",
+                "contentEncoding": "base64",
+                "format": "asr-base64"
+              }
+            },
+            "required": [
+              "mimeType"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "resource_link"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "uri": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "mimeType": {
+                "type": "string"
+              },
+              "size": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "uri",
+              "name"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "resource"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "resource": {
+                "type": "object",
+                "properties": {
+                  "uri": {
+                    "type": "string"
+                  },
+                  "mimeType": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "blob": {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "format": "asr-base64"
+                  }
+                },
+                "required": [
+                  "uri"
+                ],
+                "anyOf": [
+                  {
+                    "required": [
+                      "text"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "blob"
+                    ]
+                  }
+                ]
+              }
+            },
+            "required": [
+              "resource"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "reasoning"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "visibility": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "visibility": {
+                      "const": "encrypted"
+                    }
+                  },
+                  "required": [
+                    "visibility"
+                  ]
+                },
+                "then": {
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "text"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "summary"
+                        ]
+                      }
+                    ]
+                  },
+                  "x-asr": "ASR-015"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "x-asr": "ASR-013"
+    },
+    "Content": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ContentPart"
+      },
+      "x-asr": "ASR-013"
+    },
+    "Envelope": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "$ref": "#/$defs/RecordId"
+        },
+        "ts": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "turnId": {
+          "type": "string"
+        },
+        "inferenceId": {
+          "$ref": "#/$defs/RecordId"
+        },
+        "copiedFrom": {
+          "$ref": "#/$defs/CopiedFrom"
+        },
+        "truncated": {
+          "type": "boolean"
+        },
+        "_meta": {
+          "$ref": "#/$defs/Meta"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "x-asr": "ASR-006"
+    },
+    "record.session": {
+      "type": "object",
+      "properties": {
+        "formatVersion": {
+          "const": "0.1",
+          "x-asr": "ASR-002"
+        },
+        "agent": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/AgentName"
+            },
+            "version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ]
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "x-asr": "ASR-010"
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "x-asr": "ASR-010"
+        },
+        "producer": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "method": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "method"
+          ]
+        },
+        "startedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "endedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "title": {
+          "type": "string"
+        },
+        "cwd": {
+          "$ref": "#/$defs/AbsolutePath"
+        },
+        "repos": {
+          "$ref": "#/$defs/Repos"
+        },
+        "user": {
+          "$ref": "#/$defs/Identity"
+        },
+        "derivedFrom": {
+          "$ref": "#/$defs/DerivedFrom"
+        },
+        "parent": {
+          "$ref": "#/$defs/Parent"
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "extensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "formatVersion",
+        "agent",
+        "sessionId",
+        "producer"
+      ],
+      "x-asr": "ASR-019"
+    },
+    "record.session_info": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "endedAt": {
+          "$ref": "#/$defs/Timestamp"
+        },
+        "repos": {
+          "$ref": "#/$defs/Repos"
+        },
+        "usage": {
+          "$ref": "#/$defs/SessionUsage"
+        },
+        "cost": {
+          "$ref": "#/$defs/Cost"
+        },
+        "agentSettings": {
+          "$ref": "#/$defs/AgentSettings"
+        },
+        "tools": {
+          "$ref": "#/$defs/Tools"
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-asr": "ASR-057"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "title"
+          ]
+        },
+        {
+          "required": [
+            "endedAt"
+          ]
+        },
+        {
+          "required": [
+            "repos"
+          ]
+        },
+        {
+          "required": [
+            "usage"
+          ]
+        },
+        {
+          "required": [
+            "cost"
+          ]
+        },
+        {
+          "required": [
+            "agentSettings"
+          ]
+        },
+        {
+          "required": [
+            "tools"
+          ]
+        },
+        {
+          "required": [
+            "missing"
+          ]
+        }
+      ],
+      "x-asr": "ASR-020"
+    },
+    "record.message": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "content": {
+          "$ref": "#/$defs/Content"
+        },
+        "author": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/$defs/Identity"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "phase": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "from": {
+          "$ref": "#/$defs/SessionOnlyRef"
+        }
+      },
+      "required": [
+        "role",
+        "content"
+      ],
+      "x-asr": "ASR-021"
+    },
+    "record.tool_call": {
+      "type": "object",
+      "properties": {
+        "callId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "input": {},
+        "inputText": {
+          "type": "string"
+        },
+        "requestedBy": {
+          "type": "string"
+        },
+        "parentCallId": {
+          "type": "string"
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "$ref": "#/$defs/Path"
+              },
+              "line": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "path"
+            ]
+          }
+        },
+        "subagent": {
+          "type": "object",
+          "properties": {
+            "session": {
+              "$ref": "#/$defs/SessionOnlyRef"
+            },
+            "role": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "callId"
+      ],
+      "not": {
+        "required": [
+          "input",
+          "inputText"
+        ]
+      },
+      "x-asr": "ASR-023"
+    },
+    "record.tool_result": {
+      "type": "object",
+      "properties": {
+        "callId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "content": {
+          "$ref": "#/$defs/Content"
+        },
+        "error": {
+          "$ref": "#/$defs/Error"
+        },
+        "durationMs": {
+          "type": "number",
+          "minimum": 0
+        },
+        "input": {},
+        "inputText": {
+          "type": "string",
+          "x-asr": "ASR-076"
+        },
+        "approvalId": {
+          "type": "string",
+          "x-asr": "ASR-079"
+        },
+        "exec": {
+          "type": "object",
+          "properties": {
+            "command": {
+              "type": [
+                "string",
+                "array"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "cwd": {
+              "$ref": "#/$defs/AbsolutePath"
+            },
+            "exitCode": {
+              "type": "integer"
+            },
+            "signal": {
+              "type": "string"
+            },
+            "stdout": {
+              "type": "string"
+            },
+            "stderr": {
+              "type": "string"
+            },
+            "output": {
+              "type": "string"
+            }
+          }
+        },
+        "subagent": {
+          "type": "object",
+          "properties": {
+            "session": {
+              "$ref": "#/$defs/SessionOnlyRef"
+            }
+          },
+          "required": [
+            "session"
+          ]
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "input",
+              "inputText"
+            ]
+          },
+          "x-asr": "ASR-076"
+        }
+      ],
+      "x-asr": "ASR-025"
+    },
+    "record.approval": {
+      "type": "object",
+      "properties": {
+        "callId": {
+          "type": "string"
+        },
+        "decision": {
+          "type": "string"
+        },
+        "by": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/$defs/Identity"
+        },
+        "native": {}
+      },
+      "required": [
+        "decision"
+      ],
+      "x-asr": "ASR-073"
+    },
+    "record.file_change": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/Path"
+        },
+        "op": {
+          "type": "string"
+        },
+        "oldPath": {
+          "$ref": "#/$defs/Path"
+        },
+        "status": {
+          "type": "string"
+        },
+        "callId": {
+          "type": "string"
+        },
+        "actor": {
+          "type": "string"
+        },
+        "before": {
+          "$ref": "#/$defs/FileState"
+        },
+        "after": {
+          "$ref": "#/$defs/FileState"
+        },
+        "patch": {
+          "type": "string"
+        },
+        "edits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "oldText": {
+                "type": "string"
+              },
+              "newText": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "oldText",
+              "newText"
+            ]
+          }
+        },
+        "baseCommit": {
+          "$ref": "#/$defs/Commit"
+        }
+      },
+      "required": [
+        "path",
+        "op",
+        "status"
+      ],
+      "not": {
+        "required": [
+          "patch",
+          "edits"
+        ]
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "callId",
+              "actor"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "op": {
+                "const": "move"
+              }
+            },
+            "required": [
+              "op"
+            ]
+          },
+          "then": {
+            "required": [
+              "oldPath"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "op": {
+                "const": "copy"
+              }
+            },
+            "required": [
+              "op"
+            ]
+          },
+          "then": {
+            "required": [
+              "oldPath"
+            ]
+          }
+        }
+      ],
+      "x-asr": "ASR-027"
+    },
+    "record.vcs": {
+      "$ref": "#/$defs/Vcs"
+    },
+    "record.inference": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "$ref": "#/$defs/Model"
+        },
+        "settings": {
+          "$ref": "#/$defs/ModelSettings"
+        },
+        "usage": {
+          "$ref": "#/$defs/Usage"
+        },
+        "cost": {
+          "$ref": "#/$defs/Cost"
+        },
+        "stopReason": {
+          "type": "string"
+        },
+        "durationMs": {
+          "type": "number",
+          "minimum": 0
+        },
+        "error": {
+          "$ref": "#/$defs/Error"
+        }
+      },
+      "x-asr": "ASR-035"
+    },
+    "record.gap": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "detail": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reason"
+      ],
+      "x-asr": "ASR-039"
+    }
+  }
+}

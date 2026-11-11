@@ -1,0 +1,31 @@
+version: 2
+project_name: entire-asr
+
+builds:
+  - main: ./cmd/entire-asr
+    binary: entire-asr
+    env: [CGO_ENABLED=0]
+    flags: [-trimpath]
+    ldflags: ["-s -w"]
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    goos: [darwin, linux, windows]
+    goarch: [amd64, arm64]
+
+# Asset names that entire plugin install selects through checksums.txt:
+# entire-asr_<version>_<os>_<arch>.tar.gz, and .zip on Windows.
+archives:
+  - formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    files: [LICENSE, README.md]
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  disable: true
+
+release:
+  header: |
+    Install with `entire plugin install https://github.com/agentsessionrecord/entire-asr`, then run `entire asr export`.

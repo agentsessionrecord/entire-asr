@@ -1,0 +1,375 @@
+{
+ "checkpoints": [
+  {
+   "backend": "git-refs",
+   "id": "01KA2SYNTHETC0000000000CA1",
+   "sessions": [
+    {
+     "metadata": {
+      "cli_version": "0.13.2",
+      "checkpoint_id": "01KA2SYNTHETC0000000000CA1",
+      "session_id": "synthetic-claude-session",
+      "strategy": "manual-commit",
+      "created_at": "2026-10-01T10:00:03Z",
+      "branch": "main",
+      "checkpoints_count": 1,
+      "files_touched": [
+       "greeting.txt"
+      ],
+      "agent": "Claude Code",
+      "model": "synthetic-claude-model",
+      "compact_transcript_start": 0
+     },
+     "transcript": "claude-code",
+     "lines": [
+      0,
+      {
+       "v": 1,
+       "agent": "claude-code",
+       "cli_version": "0.13.2",
+       "type": "assistant",
+       "ts": "2026-10-01T10:00:01Z",
+       "id": "msg_synthetic_a",
+       "model": "synthetic-claude-model",
+       "input_tokens": 10,
+       "output_tokens": 3,
+       "cache_read_tokens": 4,
+       "cache_write_tokens": 2,
+       "content": [
+        {
+         "type": "text",
+         "text": "I will read the file first."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "backend": "git-branch",
+   "id": "c0de0000a001",
+   "sessions": [
+    {
+     "metadata": {
+      "cli_version": "0.13.2",
+      "checkpoint_id": "c0de0000a001",
+      "session_id": "synthetic-codex-session",
+      "strategy": "manual-commit",
+      "created_at": "2026-10-02T09:00:04Z",
+      "branch": "main",
+      "checkpoints_count": 1,
+      "files_touched": [
+       "hello.txt"
+      ],
+      "agent": "Codex",
+      "model": "synthetic-codex-model",
+      "compact_transcript_start": 0
+     },
+     "transcript": "codex",
+     "lines": [
+      0,
+      1
+     ]
+    }
+   ]
+  },
+  {
+   "backend": "git-refs",
+   "id": "01KA2SYNTHETC0000000000CB2",
+   "sessions": [
+    {
+     "metadata": {
+      "cli_version": "0.13.2",
+      "checkpoint_id": "01KA2SYNTHETC0000000000CB2",
+      "session_id": "synthetic-claude-session",
+      "strategy": "manual-commit",
+      "created_at": "2026-10-01T10:00:07Z",
+      "branch": "main",
+      "checkpoints_count": 1,
+      "files_touched": [
+       "greeting.txt"
+      ],
+      "agent": "Claude Code",
+      "model": "synthetic-claude-model",
+      "checkpoint_transcript_start": 3,
+      "compact_transcript_start": 1
+     },
+     "transcript": "claude-code",
+     "lines": [
+      0,
+      1,
+      {
+       "v": 1,
+       "agent": "claude-code",
+       "cli_version": "0.13.2",
+       "type": "assistant",
+       "ts": "2026-10-01T10:00:04Z",
+       "id": "msg_synthetic_a",
+       "content": [
+        {
+         "type": "tool_use",
+         "id": "toolu_synthetic_edit",
+         "name": "Edit",
+         "input": {
+          "file_path": "/work/greeting.txt",
+          "old_string": "helo",
+          "new_string": "hello"
+         }
+        }
+       ]
+      },
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "backend": "git-refs",
+   "id": "01KA2SYNTHETC0000000000PA4",
+   "sessions": [
+    {
+     "metadata": {
+      "cli_version": "0.13.2",
+      "checkpoint_id": "01KA2SYNTHETC0000000000PA4",
+      "session_id": "synthetic-pi-session",
+      "strategy": "manual-commit",
+      "created_at": "2026-10-03T08:00:03.500Z",
+      "branch": "main",
+      "checkpoints_count": 1,
+      "files_touched": [
+       "a.txt"
+      ],
+      "agent": "Pi",
+      "model": "synthetic-pi-model",
+      "compact_transcript_start": 0
+     },
+     "transcript": "pi",
+     "lines": [
+      0,
+      1,
+      {
+       "v": 1,
+       "agent": "pi",
+       "cli_version": "0.13.2",
+       "type": "assistant",
+       "ts": "2026-10-03T08:00:03.000Z",
+       "id": "m3",
+       "model": "synthetic-pi-model",
+       "input_tokens": 30,
+       "output_tokens": 5,
+       "cache_read_tokens": 1000,
+       "content": [
+        {
+         "type": "text",
+         "text": "An abandoned branch reply."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "backend": "git-branch",
+   "id": "c0de0000a002",
+   "sessions": [
+    {
+     "metadata": {
+      "cli_version": "0.13.2",
+      "checkpoint_id": "c0de0000a002",
+      "session_id": "synthetic-codex-session",
+      "strategy": "manual-commit",
+      "created_at": "2026-10-02T09:01:05Z",
+      "branch": "main",
+      "checkpoints_count": 1,
+      "files_touched": [
+       "hello.txt"
+      ],
+      "agent": "Codex",
+      "model": "synthetic-codex-model",
+      "checkpoint_transcript_start": 6,
+      "compact_transcript_start": 2
+     },
+     "transcript": "codex",
+     "lines": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+     ]
+    }
+   ]
+  },
+  {
+   "backend": "git-refs",
+   "id": "01KA2SYNTHETC0000000000CC3",
+   "sessions": [
+    {
+     "metadata": {
+      "cli_version": "0.13.2",
+      "checkpoint_id": "01KA2SYNTHETC0000000000CC3",
+      "session_id": "synthetic-claude-session",
+      "strategy": "manual-commit",
+      "created_at": "2026-10-01T10:01:05Z",
+      "branch": "main",
+      "checkpoints_count": 1,
+      "files_touched": [
+       "greeting.txt"
+      ],
+      "agent": "Claude Code",
+      "model": "synthetic-claude-model",
+      "checkpoint_transcript_start": 7,
+      "compact_transcript_start": 4
+     },
+     "transcript": "claude-code",
+     "lines": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+     ]
+    },
+    {
+     "metadata": {
+      "cli_version": "0.13.2",
+      "checkpoint_id": "01KA2SYNTHETC0000000000CC3",
+      "session_id": "synthetic-external-session",
+      "strategy": "manual-commit",
+      "created_at": "2026-10-01T10:01:05Z",
+      "branch": "main",
+      "checkpoints_count": 1,
+      "files_touched": [],
+      "agent": "Acme Agent",
+      "model": "",
+      "compact_transcript_start": 0
+     },
+     "lines": [
+      {
+       "v": 1,
+       "agent": "Acme Agent",
+       "cli_version": "0.13.2",
+       "type": "user",
+       "ts": "2026-10-01T10:01:01Z",
+       "content": [
+        {
+         "text": "Say hello."
+        }
+       ]
+      },
+      {
+       "v": 1,
+       "agent": "Acme Agent",
+       "cli_version": "0.13.2",
+       "type": "assistant",
+       "ts": "2026-10-01T10:01:02Z",
+       "id": "acme-1",
+       "input_tokens": 7,
+       "output_tokens": 2,
+       "content": [
+        {
+         "type": "text",
+         "text": "Hello."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "backend": "git-refs",
+   "id": "01KA2SYNTHETC0000000000PB5",
+   "sessions": [
+    {
+     "metadata": {
+      "cli_version": "0.13.2",
+      "checkpoint_id": "01KA2SYNTHETC0000000000PB5",
+      "session_id": "synthetic-pi-session",
+      "strategy": "manual-commit",
+      "created_at": "2026-10-03T08:00:06.000Z",
+      "branch": "main",
+      "checkpoints_count": 1,
+      "files_touched": [
+       "a.txt"
+      ],
+      "agent": "Pi",
+      "model": "synthetic-pi-model",
+      "checkpoint_transcript_start": 4,
+      "compact_transcript_start": 3
+     },
+     "transcript": "pi",
+     "lines": [
+      0,
+      1,
+      2,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "backend": "git-branch",
+   "id": "a1b2c3d4e5f6",
+   "sessions": [
+    {
+     "metadata": {
+      "cli_version": "0.13.2",
+      "checkpoint_id": "a1b2c3d4e5f6",
+      "session_id": "synthetic-opencode-session",
+      "strategy": "manual-commit",
+      "created_at": "2026-10-04T07:00:05.000Z",
+      "branch": "main",
+      "checkpoints_count": 1,
+      "files_touched": [
+       "a.txt"
+      ],
+      "agent": "OpenCode",
+      "model": "",
+      "compact_transcript_start": 0
+     },
+     "transcript": "opencode",
+     "lines": [
+      0,
+      1
+     ]
+    }
+   ]
+  },
+  {
+   "backend": "git-refs",
+   "id": "a1b2c3d4e5f6",
+   "migrated": true,
+   "sessions": [
+    {
+     "metadata": {
+      "cli_version": "0.13.2",
+      "checkpoint_id": "a1b2c3d4e5f6",
+      "session_id": "synthetic-opencode-session",
+      "strategy": "manual-commit",
+      "created_at": "2026-10-04T07:00:05.000Z",
+      "branch": "main",
+      "checkpoints_count": 1,
+      "files_touched": [
+       "a.txt"
+      ],
+      "agent": "OpenCode",
+      "model": "",
+      "compact_transcript_start": 0
+     },
+     "transcript": "opencode",
+     "lines": [
+      0,
+      1,
+      2
+     ]
+    }
+   ]
+  }
+ ]
+}

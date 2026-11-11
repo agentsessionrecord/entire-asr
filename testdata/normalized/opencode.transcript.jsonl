@@ -1,0 +1,3 @@
+{"v":1,"agent":"opencode","cli_version":"0.13.2","type":"user","ts":"2026-10-04T07:00:00.000Z","content":[{"id":"prt_synthetic_1","text":"List the files."}]}
+{"v":1,"agent":"opencode","cli_version":"0.13.2","type":"assistant","ts":"2026-10-04T07:00:02.000Z","id":"msg_synthetic_oc_1","input_tokens":3,"output_tokens":120,"content":[{"type":"text","text":"Listing the files."},{"type":"tool_use","id":"toolu_synthetic_ls","name":"bash","input":{"command":"ls","description":"List files"},"result":{"output":"a.txt\nb.txt\n","status":"success"}}]}
+{"v":1,"agent":"opencode","cli_version":"0.13.2","type":"assistant","ts":"2026-10-04T07:00:04.000Z","id":"msg_synthetic_oc_2","input_tokens":5,"output_tokens":20,"content":[{"type":"text","text":"There are two files."}]}
